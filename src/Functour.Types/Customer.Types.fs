@@ -2,23 +2,12 @@ namespace Types
 
 module CustomerTypes =  
 
-    open System
     open CommonTypes
 
-    
-    type PersonId = private PersonId of Guid
-    module PersonId =
-        let create guid = 
-            if  guid = Guid.Empty then
-                failwith "Guid should not be empty"
-            else
-                PersonId guid
-        
-        let value (PersonId personId) = 
-            personId
+    type CustomerId = CustomerId of Id
 
     type Customer = { 
-        Id: PersonId; 
+        Id: CustomerId; 
         FirstName: Name50; 
-        LastName: Name50; 
+        LastName: Name50;
     }
