@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="SharedKernel.fs" />
+    <Compile Include="ValueObjects.fs" />
+    <Compile Include="DomainTypes.fs" />
   </ItemGroup>
 
 </Project>
