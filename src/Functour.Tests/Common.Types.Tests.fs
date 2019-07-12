@@ -1,25 +1,26 @@
 module CommonTypesTests
 
-open System
 open Xunit
-open Types.CommonTypes
 open FsUnit.Xunit
+open Types.CommonTypes
 
 [<Fact>]
-let ``Creating Id With Empty Guid Should Fail`` () =
-    let idResult = Id.create Guid.Empty
-    let idCreateResult = 
-        match idResult with 
+let ``Creating A Money With Negative Value Should Fail`` () =
+    let moneyResult = Money.create (-12.5m, Dollar)
+    let matched = 
+        match moneyResult with
         | Ok _ -> true
-        | Error _ -> false
-    idCreateResult |> should be False
+        | _ -> false
+    matched |> should equal false
 
 [<Fact>]
-let ``Creating Id With New Guid Should Return Ok And Value Should Be Set Correctly`` () =
-    let guid = Guid.NewGuid()
-    let idResult = Id.create guid
-    let idCreateResult = 
-        match idResult with 
-        | Ok result -> (true, Id.value result)
-        | Error _ -> (false, Guid.Empty)
-    idCreateResult |> should equal (true, guid)
+let ``Getting A Money Value Should Be Ok`` () =
+    let expectedMoneyValue = 654.45m
+    let expectedMoneyCurrency = Dollar
+    let moneyResult = Money.create (expectedMoneyValue, expectedMoneyCurrency)
+    let moneyValue = 
+        match moneyResult with
+        | Ok money -> money
+        | _ -> (0m, expectedMoneyCurrency)
+    fst moneyValue |> should equal expectedMoneyValue
+    snd moneyValue |> should equal expectedMoneyCurrency

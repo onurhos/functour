@@ -2,34 +2,29 @@
 
 module CommonTypes =
 
-    open System
-
-    type Id = private Id of Guid
-    module Id =
-        let create guid = 
-            if  guid = Guid.Empty then
-                Error "Guid should not be empty"
-            else
-                Ok (Id guid)
-
-        let value (Id id) = 
-            id
+    open Result
 
     type Currency = 
         | Dollar
         | Ruble
         | Tl
 
+    type MoneyCreateError = 
+        | MoneyValueShouldNotBeNegative
+
     type Money = private Money of (decimal * Currency)
     module Money =
         let create ( value:decimal, currency:Currency ) = 
-            if  value <= 0m then
-                Error "Money value must be required"
+            if  value < 0m then
+                Error MoneyValueShouldNotBeNegative
             else
                 Ok (value, currency)
 
         let value (Money money) = 
-            money
+            fst money
+
+        let currency (Money money) = 
+            snd money
 
     type Name50 = private Name50 of string
     module Name50 =

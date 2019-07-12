@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Customer.Types.Tests.fs" />
     <Compile Include="Common.Types.Tests.fs" />
+    <Compile Include="Customer.Types.Tests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

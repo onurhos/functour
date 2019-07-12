@@ -2,18 +2,15 @@ module CustomerTypesTests
 
 open System
 open Xunit
-open Types.CommonTypes
-open Types.CustomerTypes
 open FsUnit.Xunit
+open Types.CustomerTypes
 
 [<Fact>]
-let ``Creating A Customer Should Succeed`` () =
-    let guid = Guid.NewGuid()
-    let creationResultOfId = Id.create guid
-    let customerId = 
-        match creationResultOfId with 
-            | Ok resultId -> CustomerId resultId
-            | _ -> failwith "Error"
-    
-    let (CustomerId customerIdVal) = customerId
-    Id.value customerIdVal |> should equal guid
+let ``Creating And Getting Customer Id Should Be Ok`` () =
+    let expectedCustomerIdValue = Guid.NewGuid()
+    let customerCreateResult = CustomerId.create expectedCustomerIdValue
+    let customerIdValue = 
+        match customerCreateResult with
+        | Ok customerId -> CustomerId.value customerId
+        | _ -> Guid.Empty
+    customerIdValue |> should equal expectedCustomerIdValue
