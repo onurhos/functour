@@ -2,50 +2,60 @@
 
 module CommonTypes =
 
-    open Result
+    open System
+    open System.Text.RegularExpressions
 
-    type Currency = 
-        | Dollar
-        | Ruble
-        | Tl
-
-    type MoneyCreateError = 
-        | MoneyValueShouldNotBeNegative
-
-    type Money = private Money of (decimal * Currency)
-    module Money =
-        let create ( value:decimal, currency:Currency ) = 
-            if  value < 0m then
-                Error MoneyValueShouldNotBeNegative
-            else
-                Ok (value, currency)
-
-        let value (Money money) = 
-            fst money
-
-        let currency (Money money) = 
-            snd money
+    type NameValidationError = 
+        | NameMaxLengthExceeded
+        | NameShouldNotBeEmpty
 
     type Name50 = private Name50 of string
     module Name50 =
         let create (str:string) = 
-            let MaxValue = 50
-            if  str.Length > MaxValue then
-                Error "Name should be 50 characters long."
+            let MaxValue = 50        
+            if  String.IsNullOrEmpty(str) then 
+                Error NameShouldNotBeEmpty            
+            else if  str.Length > MaxValue then
+                Error NameMaxLengthExceeded
             else
                 Ok(Name50 str)
 
         let value (Name50 name) = 
             name
 
+    //  Name100
+
     type Name100 = private Name100 of string
     module Name100 =
         let create (str:string) = 
             let MaxValue = 100
-            if  str.Length > MaxValue then
-                Error "Name should be 100 characters long."
+            if  String.IsNullOrEmpty(str) then 
+                Error NameShouldNotBeEmpty
+            else if  str.Length > MaxValue then
+                Error NameMaxLengthExceeded
             else
                 Ok(Name100 str)
 
         let value (Name100 name) = 
             name
+
+    //  Email
+
+    type EmailValidationError =
+        | InvalidEmailFormat
+        | EmailMaxLengthExceeded
+
+    type Email = private Email of string
+    module Email =
+        let create (str:string) = 
+            let MaxValue = 250
+            let regex = Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*")
+            if  str.Length > MaxValue then
+                Error EmailMaxLengthExceeded
+            else if String.IsNullOrEmpty(str) || regex.IsMatch(str) = false then
+                Error InvalidEmailFormat
+            else
+                Ok(Email str)
+
+        let value (Email email) = 
+            email

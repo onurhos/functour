@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Result.fs" />
     <Compile Include="Common.Types.fs" />
+    <Compile Include="Payment.Types.fs" />
     <Compile Include="Customer.Types.fs" />
     <Compile Include="Hotel.Types.fs" />
   </ItemGroup>
