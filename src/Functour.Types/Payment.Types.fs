@@ -2,10 +2,24 @@
 
 module Payment =
 
-    type Currency = 
-        | Dollar
-        | Ruble
-        | Tl
+    open System
+    open CommonTypes
+
+    type CurrencyValidationError = 
+        | CurrencyIdShouldNotBeEmpty
+
+    [<Struct>]
+    type CurrencyId = private CurrencyId of Guid
+    module CurrencyId =
+        let create guid = if guid = Guid.Empty then Error CurrencyIdShouldNotBeEmpty else Ok (CurrencyId guid)
+        let value (CurrencyId id) = id
+
+    type Currency = {
+        Id : CurrencyId
+        Symbol : String5
+        Name : String50
+        Active : bool
+    }
 
     type MoneyCreateError = 
         | MoneyValueShouldNotBeNegative

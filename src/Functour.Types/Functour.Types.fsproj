@@ -5,10 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Result.fs" />
     <Compile Include="Common.Types.fs" />
-    <Compile Include="Payment.Types.fs" />
     <Compile Include="Customer.Types.fs" />
+    <Compile Include="Payment.Types.fs" />
     <Compile Include="Hotel.Types.fs" />
   </ItemGroup>
 

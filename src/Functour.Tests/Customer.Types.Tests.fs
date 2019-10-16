@@ -1,16 +1,22 @@
-module CustomerTypesTests
+namespace Tests
 
-open System
-open Xunit
-open FsUnit.Xunit
-open Types.CustomerTypes
+module CustomerTypesTests = 
 
-[<Fact>]
-let ``Creating And Getting Customer Id Should Be Ok`` () =
-    let expectedCustomerIdValue = Guid.NewGuid()
-    let customerCreateResult = CustomerId.create expectedCustomerIdValue
-    let customerIdValue = 
-        match customerCreateResult with
-        | Ok customerId -> CustomerId.value customerId
-        | _ -> Guid.Empty
-    customerIdValue |> should equal expectedCustomerIdValue
+    open System
+    open Xunit
+    open FsUnit.Xunit
+    open Types.CustomerTypes
+    open Types.Predicates
+
+    [<Fact>]
+    let ``creating customer id with empty guid should be fail`` () =
+        let expectedId = Guid.Empty
+        let result = CustomerId.create "CustomerId" expectedId
+        result |> isError |> should equal true
+
+    [<Fact>]
+    let ``creating and getting customer id should be ok`` () =
+        let expectedId = Guid.NewGuid()
+        let result = CustomerId.create "CustomerId" expectedId
+        result |> isOk |> should equal true
+        result |> shouldOk |> CustomerId.value |> should equal expectedId

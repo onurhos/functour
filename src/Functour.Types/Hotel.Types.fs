@@ -10,6 +10,7 @@ module rec HotelTypes =
     type HotelCreateError = 
         | HotelIdShouldNotBeEmpty
 
+    [<Struct>]
     type HotelId = private HotelId of Guid
     module HotelId =
         let create guid = if guid = Guid.Empty then Error HotelIdShouldNotBeEmpty else Ok (HotelId guid)
@@ -17,7 +18,7 @@ module rec HotelTypes =
 
     type Hotel = { 
         Id: HotelId
-        Name: Name100
+        Name: String100
         Concepts : HotelConcept list
         Rooms : HotelRoom list
     }
@@ -27,6 +28,7 @@ module rec HotelTypes =
     type HotelRoomCreateError = 
         | HotelRoomIdShouldNotBeEmpty
 
+    [<Struct>]
     type HotelRoomId = private HotelRoomId of Guid
     module HotelRoomId =
         let create guid = if guid = Guid.Empty then Error HotelRoomIdShouldNotBeEmpty else Ok (HotelRoomId guid)
@@ -34,7 +36,7 @@ module rec HotelTypes =
 
     type HotelRoom = { 
         Id: HotelRoomId
-        Name: Name100
+        Name: String100
     }
 
     //  Concepts
@@ -42,6 +44,7 @@ module rec HotelTypes =
     type HotelConceptCreateError = 
         | HotelConceptIdShouldNotBeEmpty
 
+    [<Struct>]
     type HotelConceptId = private HotelConceptId of Guid
     module HotelConceptId =
         let create guid = if guid = Guid.Empty then Error HotelConceptIdShouldNotBeEmpty else Ok (HotelConceptId guid)
@@ -49,5 +52,5 @@ module rec HotelTypes =
 
     type HotelConcept = { 
         Id: HotelConceptId
-        Name: Name100
+        Name: String100
     }
